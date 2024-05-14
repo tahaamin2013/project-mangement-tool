@@ -4,6 +4,13 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100%;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 a {
@@ -13,4 +20,63 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.navbar {
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
+}
+
+.btn-primary {
+  background-color: #746BC4 !important;
+  border-color: #746BC4 !important;
+}
+
+.card {
+  margin-bottom: 8px;
+}
+
+.add-wrapper.btn.btn-primary {
+  background-color: inherit !important;
+  border-color: inherit !important;
+  color: #6f7782 !important;
+  border: none;
+}
+
+.add-wrapper.btn.btn-primary:hover {
+  background-color: rgba(21, 7, 38, 0.04) !important;
+  border-color: rgba(21, 7, 38, 0.04) !important;
+  color: #6f7782 !important;
+  border: none;
+}
+
+.is-empty {
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(232, 236, 238, 0.5), rgba(232, 236, 238, 0) 100%);
+  flex: 1 1 100%;
+}
+
+.main-content {
+  flex: 1 1 100%;
+}
+
+.task-container.card {
+  border: 1px rgb(233, 233, 231);
+}
+
+.task-container .card-body {
+  border-radius: 3px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  box-shadow: rgb(15 15 15 / 10%) 0px 0px 0px 1px, rgb(15 15 15 / 10%) 0px 2px 4px;
+}
+
+.task-container .card-body:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+}
+
+.login-card {
+  width: 40%;
+  margin: auto;
+  margin-top: 30px;
 }
