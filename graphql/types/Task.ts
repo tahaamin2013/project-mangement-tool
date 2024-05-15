@@ -31,6 +31,7 @@ export const TasksQuery = extendType({
     // get all tasks
     t.nonNull.list.field('tasks', {
       type: 'Task',
+      // @ts-ignore
       resolve(_parent, _args, ctx) {
         return ctx.prisma.task.findMany()
       },
@@ -41,6 +42,7 @@ export const TasksQuery = extendType({
       args: {
         userId: nonNull(stringArg())
       },
+      // @ts-ignore
       resolve(_parent, args, ctx) {
         return ctx.prisma.task.findMany({
           where: {
@@ -64,7 +66,8 @@ export const TaskMutation = extendType({
        userId: stringArg(),
        id: stringArg(),
        status: stringArg(),
-     },
+      },
+     // @ts-ignore
      resolve(_root, args, ctx) {
        return ctx.prisma.task.create({
          data: {
@@ -86,7 +89,8 @@ export const TaskMutation = extendType({
         description: stringArg(),
         userId: stringArg(),
         status: stringArg(),
-      },
+       },
+      // @ts-ignore
       resolve(_root, args, ctx) {
         return ctx.prisma.task.update({
           where: { id: args.id },
@@ -105,6 +109,7 @@ export const TaskMutation = extendType({
       args: {
         id: nonNull(stringArg()),
       },
+      // @ts-ignore
       resolve(_root, args, ctx) {
         return ctx.prisma.task.delete({
           where: { id: args.id },
