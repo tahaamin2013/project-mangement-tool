@@ -3,7 +3,7 @@ import { Col, Button, Card, Form, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import TaskComponent from "./TaskComponent";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable } from "@hello-pangea/dnd";
 import AddTaskModal from "./AddTaskModal";
 
 interface BoardSectionProps {
@@ -25,7 +25,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   };
   const handleShow = () => setShowModal(true);
 
-  console.log(title, "title 123")
+  console.log(title, "title 123");
 
   return (
     <>

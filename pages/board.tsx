@@ -3,7 +3,7 @@ import { Row } from "react-bootstrap";
 import { gql, useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import TaskComponent from "../components/TaskComponent";
 import BoardSection from "../components/BoardSection";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 const AllTasksQuery = gql`
   query {
@@ -61,63 +61,70 @@ const Board = () => {
     },
   });
 
+  const [updateTask] = useMutation(UpdateTaskMutation);
+  const [
+    getTasks,
+    { data: tasksData, loading: tasksLoading, error: tasksError },
+  ] = useLazyQuery(GetUserQuery);
+  const [tasks, setTasks] = useState([]);
   const sections: Array<String> = ["Backlog", "In-Progress", "Review", "Done"];
+
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     console.log(result);
-    // if (!destination) {
-    //   return;
-    // }
+    if (!destination) {
+      return;
+    }
 
-    // if (destination.droppableId === source.droppableId) {
-    //   return;
-    // }
+    if (destination.droppableId === source.droppableId) {
+      return;
+    }
 
-    // const updatedTasksList =
-    //   tasks &&
-    //   tasks.map((t: any) => {
-    //     if (t.id === draggableId) {
-    //       return {
-    //         ...t,
-    //         status: destination.droppableId,
-    //       };
-    //     } else {
-    //       return t;
-    //     }
-    //   });
-    // setTasks(updatedTasksList);
+    const updatedTasksList =
+      tasks &&
+      tasks.map((t: any) => {
+        if (t.id === draggableId) {
+          return {
+            ...t,
+            status: destination.droppableId,
+          };
+        } else {
+          return t;
+        }
+      });
+    setTasks(updatedTasksList);
 
-    // updateTask({
-    //   variables: {
-    //     id: draggableId,
-    //     status: destination.droppableId,
-    //   },
-    //   update: (cache, { data }) => {
-    //     const existingTasks: any = cache.readQuery({
-    //       query: AllTasksQuery,
-    //     });
-    //     const updatedTasks = existingTasks!.tasks.map((t: any) => {
-    //       if (t.id === draggableId) {
-    //         return {
-    //           ...t,
-    //           ...data!.updateTask!,
-    //         };
-    //       } else {
-    //         return t;
-    //       }
-    //     });
-    //     cache.writeQuery({
-    //       query: AllTasksQuery,
-    //       data: { tasks: updatedTasks },
-    //     });
-    //     const dataInCache = cache.readQuery({ query: AllTasksQuery });
-    //     console.log(dataInCache);
-    //   },
-    //   onCompleted: (data) => {
-    //     // setTasks(data.tasks)
-    //   },
-    // });
+    updateTask({
+      variables: {
+        id: draggableId,
+        status: destination.droppableId,
+      },
+      update: (cache, { data }) => {
+        const existingTasks: any = cache.readQuery({
+          query: AllTasksQuery,
+        });
+        const updatedTasks = existingTasks!.tasks.map((t: any) => {
+          if (t.id === draggableId) {
+            return {
+              ...t,
+              ...data!.updateTask!,
+            };
+          } else {
+            return t;
+          }
+        });
+        cache.writeQuery({
+          query: AllTasksQuery,
+          data: { tasks: updatedTasks },
+        });
+        const dataInCache = cache.readQuery({ query: AllTasksQuery });
+        console.log(dataInCache);
+      },
+      onCompleted: (data) => {
+        setTasks(data.tasks);
+      },
+    });
   };
 
   let filteredData: Array<Task> = data
@@ -136,22 +143,25 @@ const Board = () => {
         <h1>Project Title</h1>
       </Row>
       <DragDropContext onDragEnd={onDragEnd}>
-      <div className="board-container d-flex flex-row flex-grow-1">
-        {sections.map((section: String, index: number) => {
-          let filteredData: Array<Task> = data
-            ? data.tasks.filter((task: Task) => {
-                return task.status === section;
-              })
-            : [];
+        <div className="board-container d-flex flex-row flex-grow-1">
+          {sections.map((section: String, index: number) => {
+            let filteredData: Array<Task> = data
+              ? data.tasks.filter((task: Task) => {
+                  return task.status === section;
+                })
+              : [];
 
-          console.log("section", section);
+            console.log("section", section);
 
-          return (
-            <BoardSection title={String(section)} tasks={filteredData}></BoardSection>
-          );
-        })}
-      </div>
-     </DragDropContext>
+            return (
+              <BoardSection
+                title={String(section)}
+                tasks={filteredData}
+              ></BoardSection>
+            );
+          })}
+        </div>
+      </DragDropContext>
     </div>
   );
 };

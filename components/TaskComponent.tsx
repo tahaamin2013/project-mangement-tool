@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable } from "@hello-pangea/dnd";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -102,7 +102,6 @@ const TaskComponent: React.FC<Task> = ({ title, description, id, index }) => {
   };
 
   console.log(id);
-  
 
   return (
     <>
