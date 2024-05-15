@@ -11,6 +11,7 @@ export const User = objectType({
     t.field('role', { type: Role })
     t.list.field('tasks', {
       type: Task,
+      // @ts-ignore
       async resolve(parent, _args, ctx) {
         return await ctx.prisma.user
           .findUnique({
