@@ -67,7 +67,7 @@ const Board = () => {
     { data: tasksData, loading: tasksLoading, error: tasksError },
   ] = useLazyQuery(GetUserQuery);
   const [tasks, setTasks] = useState([]);
-  const sections: Array<String> = ["Backlog", "In-Progress", "Review", "Done"];
+  const sections: Array<String> = ["Stuck", "In-Progress", "Review", "Done"];
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -128,7 +128,7 @@ const Board = () => {
 
   let filteredData: Array<Task> = data
     ? data.tasks.filter((task: Task) => {
-        return task.status === "Backlog";
+        return task.status === "Stuck";
       })
     : [];
 
@@ -142,25 +142,24 @@ const Board = () => {
         <h1>Project Title</h1>
       </Row>
       <DragDropContext onDragEnd={onDragEnd}>
-<div className="board-container d-flex flex-row flex-grow-1">
-  {sections.map((section, index) => {
-    let filteredData = data
-      ? data.tasks.filter((task) => {
-          return task.status === section;
-        })
-      : [];
-    console.log("section", section);
-    // Use a unique identifier (like 'section' itself if it's unique) as the key
-    return (
-      <BoardSection
-        key={String(section)} // Use a unique key for each BoardSection
-        title={String(section)}
-        tasks={filteredData}
-      ></BoardSection>
-    );
-  })}
-</div>
-
+        <div className="board-container d-flex flex-row flex-grow-1">
+          {sections.map((section, index) => {
+            let filteredData = data
+              ? data.tasks.filter((task) => {
+                  return task.status === section;
+                })
+              : [];
+            console.log("section", section);
+            // Use a unique identifier (like 'section' itself if it's unique) as the key
+            return (
+              <BoardSection
+                key={String(section)} // Use a unique key for each BoardSection
+                title={String(section)}
+                tasks={filteredData}
+              ></BoardSection>
+            );
+          })}
+        </div>
       </DragDropContext>
     </div>
   );
