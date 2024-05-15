@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { Col, Button, Card, Form, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "react-bootstrap";
-import { gql, useMutation } from "@apollo/client";
 import TaskComponent from "./TaskComponent";
 import { Droppable } from "react-beautiful-dnd";
 import AddTaskModal from "./AddTaskModal";
 
 interface BoardSectionProps {
-  title: String;
+  title: string;
   tasks: any;
   reFetchTasks: () => void;
 }
@@ -27,6 +25,8 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   };
   const handleShow = () => setShowModal(true);
 
+  console.log(title, "title 123")
+
   return (
     <>
       <Col md={3} className="d-flex flex-column p-2">
@@ -38,42 +38,26 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             onClick={handleShow}
           />
         </div>
-        {/* <Droppable droppableId={title}>
-          {(provided) => ( */}
+        <Droppable droppableId={title}>
+          {(provided) => (
             <Container
               className="p-0 d-flex flex-column h-100"
-              // ref={provided.innerRef}
-              // {...provided.droppableProps}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
             >
-              {tasks &&
-                tasks.map((task: Task, index: number) => {
-                  return (
-                    <TaskComponent
-                      title={task.title}
-                      description={task.description}
-                      id={task.id}
-                      key={task.id}
-                    />
-                  );
-                })}
-              {tasks.length > 0 && (
-                <Button className="add-wrapper" onClick={handleShow}>
-                  <FontAwesomeIcon icon={faPlus} style={{ padding: "2px" }} />
-                  Add task
-                </Button>
-              )}
-              {tasks.length === 0 && (
-                <div className="is-empty d-flex flex-column">
-                  <Button className="add-wrapper" onClick={handleShow}>
-                    <FontAwesomeIcon icon={faPlus} style={{ padding: "2px" }} />
-                    Add task
-                  </Button>
-                </div>
-              )}
-              {/* {provided.placeholder} */}
+              {tasks.map((task, index) => (
+                <TaskComponent
+                  key={task.id}
+                  id={task.id}
+                  title={task.title}
+                  description={task.description}
+                  index={index}
+                />
+              ))}
+              {provided.placeholder}
             </Container>
-          {/* )} */}
-        {/* </Droppable> */}
+          )}
+        </Droppable>
       </Col>
       <AddTaskModal
         showModal={showModal}

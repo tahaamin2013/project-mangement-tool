@@ -101,21 +101,25 @@ const TaskComponent: React.FC<Task> = ({ title, description, id, index }) => {
     handleClose();
   };
 
+  console.log(id);
+  
+
   return (
     <>
-      {/* <Draggable draggableId={id} index={index}>
-        {(provided) => ( */}
+      <Draggable draggableId={id} index={index}>
+        {(provided) => (
           <Card
             className="task-container"
             onClick={() => handleShow()}
-            // {...provided.draggableProps}
-            // {...provided.dragHandleProps}
-            // ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
           >
             <Card.Body>{title}</Card.Body>
           </Card>
-        {/* )} */}
-      {/* </Draggable> */}
+        )}
+      </Draggable>
+
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update a Task</Modal.Title>

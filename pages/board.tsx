@@ -135,7 +135,7 @@ const Board = () => {
       <Row>
         <h1>Project Title</h1>
       </Row>
-      {/* <DragDropContext onDragEnd={onDragEnd}> */}
+      <DragDropContext onDragEnd={onDragEnd}>
       <div className="board-container d-flex flex-row flex-grow-1">
         {sections.map((section: String, index: number) => {
           let filteredData: Array<Task> = data
@@ -147,11 +147,11 @@ const Board = () => {
           console.log("section", section);
 
           return (
-            <BoardSection title={section} tasks={filteredData}></BoardSection>
+            <BoardSection title={String(section)} tasks={filteredData}></BoardSection>
           );
         })}
       </div>
-      {/* </DragDropContext> */}
+     </DragDropContext>
     </div>
   );
 };
