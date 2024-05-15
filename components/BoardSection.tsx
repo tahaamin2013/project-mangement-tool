@@ -9,13 +9,15 @@ import AddTaskModal from "./AddTaskModal";
 interface BoardSectionProps {
   title: string;
   tasks: any;
-  reFetchTasks: () => void;
+  reFetchTasks?: () => void;
+  key: any;
 }
 
 const BoardSection: React.FC<BoardSectionProps> = ({
   title,
   tasks,
   reFetchTasks,
+  key,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +31,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
   return (
     <>
-      <Col md={3} className="d-flex flex-column p-2">
+      <Col key={key} md={3} className="d-flex flex-column p-2">
         <div className="board-section-header d-flex flex-row align-items-center">
           <h3 className="me-auto">{title}</h3>
           <FontAwesomeIcon

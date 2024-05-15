@@ -153,7 +153,7 @@ const Board = () => {
     // Use a unique identifier (like 'section' itself if it's unique) as the key
     return (
       <BoardSection
-        key={section} // Use a unique key for each BoardSection
+        key={String(section)} // Use a unique key for each BoardSection
         title={String(section)}
         tasks={filteredData}
       ></BoardSection>
