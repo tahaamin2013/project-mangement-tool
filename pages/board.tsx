@@ -69,7 +69,6 @@ const Board = () => {
   const [tasks, setTasks] = useState([]);
   const sections: Array<String> = ["Backlog", "In-Progress", "Review", "Done"];
 
-
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     console.log(result);
@@ -150,9 +149,7 @@ const Board = () => {
                   return task.status === section;
                 })
               : [];
-
             console.log("section", section);
-
             return (
               <BoardSection
                 title={String(section)}
